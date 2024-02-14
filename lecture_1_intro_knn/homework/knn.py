@@ -55,10 +55,15 @@ class KNNClassifier:
            with distances between each test and each train sample
         """
         
-        """
-        YOUR CODE IS HERE
-        """
-        pass
+        num_test_samples = X.shape[0]
+        num_train_samples = self.train_X.shape[0]
+        distances = np.zeros((num_test_samples, num_train_samples))
+
+        for i in range(num_test_samples):
+            for j in range(num_train_samples):
+                distances[i, j] = np.sum(np.abs(X[i] - self.train_X[j]))
+
+        return distances
 
 
     def compute_distances_one_loop(self, X):
@@ -73,11 +78,14 @@ class KNNClassifier:
         distances, np array (num_test_samples, num_train_samples) - array
            with distances between each test and each train sample
         """
+        num_test_samples = X.shape[0]
+        num_train_samples = self.train_X.shape[0]
+        distances = np.zeros((num_test_samples, num_train_samples))
 
-        """
-        YOUR CODE IS HERE
-        """
-        pass
+        for i in range(num_test_samples):
+            distances[i] = np.sum(np.abs(X[i] - self.train_X), axis=1)
+
+        return distances
 
 
     def compute_distances_no_loops(self, X):
@@ -93,10 +101,14 @@ class KNNClassifier:
            with distances between each test and each train sample
         """
 
-        """
-        YOUR CODE IS HERE
-        """
-        pass
+        num_test_samples = X.shape[0]
+        num_train_samples = self.train_X.shape[0]
+        distances = np.zeros((num_test_samples, num_train_samples))
+
+        # Using broadcasting to compute the absolute difference
+        distances = np.abs(X[:, np.newaxis] - self.train_X).sum(axis=2)
+
+        return distances
 
 
     def predict_labels_binary(self, distances):
@@ -115,10 +127,7 @@ class KNNClassifier:
         n_test = distances.shape[0]
         prediction = np.zeros(n_test)
 
-        """
-        YOUR CODE IS HERE
-        """
-        pass
+        
 
 
     def predict_labels_multiclass(self, distances):
